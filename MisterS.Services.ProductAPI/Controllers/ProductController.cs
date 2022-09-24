@@ -104,7 +104,7 @@ namespace MisterS.Services.ProductAPI.Controllers
             try
             {
                 var isSuccess = await _productRepository.DeleteProduct(id);
-                _responseDto.Result = isSuccess;
+                _responseDto.IsSuccess = isSuccess;
             }
             catch (Exception ex)
             {
