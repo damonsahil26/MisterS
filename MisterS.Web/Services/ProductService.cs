@@ -3,43 +3,64 @@ using MisterS.Web.Services.IServices;
 
 namespace MisterS.Web.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : BaseService, IProductService
     {
-        public ResponseDto responseModel { get; set; } = new ResponseDto();
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public Task<T> CreateProductAsync<T>(ProductDto productDto)
+        public ProductService(IHttpClientFactory httpClientFactory) : base(httpClientFactory)
         {
-            throw new NotImplementedException();
+            _httpClientFactory = httpClientFactory;
         }
 
-        public Task<T> DeleteProductByIdAsync<T>(int id)
+        public async Task<T> CreateProductAsync<T>(ProductDto productDto)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.POST,
+                Data = productDto,
+                AccessToken = "",
+                Url = Constants.StaticData.ProductBaseUri + "api/products"
+            });
         }
 
-        public void Dispose()
+        public async Task<T> DeleteProductByIdAsync<T>(int id)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.DELETE,
+                AccessToken = "",
+                Url = Constants.StaticData.ProductBaseUri + "api/products/" + id
+            });
         }
 
-        public Task<T> GetAllProductsAsync<T>()
+        public async Task<T> GetAllProductsAsync<T>()
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.GET,
+                AccessToken = "",
+                Url = Constants.StaticData.ProductBaseUri + "api/products"
+            });
         }
 
-        public Task<T> GetProductByIdAsync<T>(int id)
+        public async Task<T> GetProductByIdAsync<T>(int id)
         {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.GET,
+                AccessToken = "",
+                Url = Constants.StaticData.ProductBaseUri + "api/products/" + id
+            });
         }
-
-        public Task<T> SendAsync<T>(ApiRequestModel apiRequest)
+        public async Task<T> UpdateProductAsync<T>(ProductDto productDto)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<T> UpdateProductAsync<T>(ProductDto productDto)
-        {
-            throw new NotImplementedException();
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.PUT,
+                Data = productDto,
+                AccessToken = "",
+                Url = Constants.StaticData.ProductBaseUri + "api/products"
+            });
         }
     }
 }

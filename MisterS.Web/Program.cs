@@ -1,7 +1,14 @@
+using MisterS.Web.Constants;
+using MisterS.Web.Services;
+using MisterS.Web.Services.IServices;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpClient<IProductService, ProductService>();
+StaticData.ProductBaseUri = builder.Configuration["ServiceUrls:ProductAPI"];
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 
