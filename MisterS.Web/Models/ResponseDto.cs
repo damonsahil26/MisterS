@@ -1,4 +1,4 @@
-﻿namespace MisterS.Services.ProductAPI.Models.DTO
+﻿namespace MisterS.Web.Models
 {
     public class ResponseDto
     {

@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{C1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{C252A71F-7C44-47DE-AF39-DD027DD7CBD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisterS.Web", "MisterS.Web\MisterS.Web.csproj", "{EB8B884C-FC39-49FA-A381-95E8093D7366}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Web", "MisterS.Web\MisterS.Web.csproj", "{EB8B884C-FC39-49FA-A381-95E8093D7366}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisterS.Services.ProductAPI", "MisterS.Services.ProductAPI\MisterS.Services.ProductAPI.csproj", "{17C93424-BF50-48B4-840B-C4DC1C4BDC94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Services.ProductAPI", "MisterS.Services.ProductAPI\MisterS.Services.ProductAPI.csproj", "{17C93424-BF50-48B4-840B-C4DC1C4BDC94}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
