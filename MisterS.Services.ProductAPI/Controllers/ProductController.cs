@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MisterS.Services.ProductAPI.Models.DTO;
 using MisterS.Services.ProductAPI.Repository;
 
@@ -17,6 +18,7 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ResponseDto> GetProducts()
         {
             try
@@ -37,6 +39,7 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("{id}")]
         public async Task<ResponseDto> GetProductById(int id)
         {
@@ -58,6 +61,7 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ResponseDto> CreateProduct([FromBody] ProductDto productDto)
         {
             try
@@ -78,6 +82,7 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<ResponseDto> UpdateProduct([FromBody] ProductDto productDto)
         {
             try
@@ -98,6 +103,7 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "admin")]
         [Route("{id}")]
         public async Task<ResponseDto> DeleteProduct(int id)
         {
