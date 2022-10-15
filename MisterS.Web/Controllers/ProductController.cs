@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MisterS.Web.Models;
 using MisterS.Web.Services.IServices;
 using Newtonsoft.Json;
@@ -16,8 +18,9 @@ namespace MisterS.Web.Controllers
 
         public async Task<IActionResult> ProductIndex()
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
             List<ProductDto> products = new();
-            var response = await _productService.GetAllProductsAsync<ResponseDto>();
+            var response = await _productService.GetAllProductsAsync<ResponseDto>(token ?? "");
             if (response != null && response.IsSuccess)
             {
                 products = JsonConvert.DeserializeObject<List<ProductDto>>(Convert.ToString(response.Result));
@@ -34,9 +37,10 @@ namespace MisterS.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateProduct(ProductDto productDto)
         {
+            var token = await HttpContext.GetTokenAsync("access_token");
             if (ModelState.IsValid)
             {
-                var response = await _productService.CreateProductAsync<ResponseDto>(productDto);
+                var response = await _productService.CreateProductAsync<ResponseDto>(productDto, token ?? "");
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(ProductIndex));
@@ -48,7 +52,8 @@ namespace MisterS.Web.Controllers
 
         public async Task<IActionResult> EditProduct(int productId)
         {
-            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId);
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId, token ?? "");
             if (response != null && response.IsSuccess)
             {
                 var product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
@@ -64,7 +69,8 @@ namespace MisterS.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = await _productService.UpdateProductAsync<ResponseDto>(productDto);
+                var token = await HttpContext.GetTokenAsync("access_token");
+                var response = await _productService.UpdateProductAsync<ResponseDto>(productDto, token ?? "");
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(ProductIndex));
@@ -74,9 +80,12 @@ namespace MisterS.Web.Controllers
             return View(productDto);
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> DeleteProduct(int productId)
         {
-            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId);
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _productService.GetProductByIdAsync<ResponseDto>(productId, token ?? "");
             if (response != null && response.IsSuccess)
             {
                 var product = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
@@ -87,12 +96,14 @@ namespace MisterS.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteProduct(ProductDto productDto)
         {
             if (ModelState.IsValid)
             {
-                var response = await _productService.DeleteProductByIdAsync<ResponseDto>(productDto.ProductId);
+                var token = await HttpContext.GetTokenAsync("access_token");
+                var response = await _productService.DeleteProductByIdAsync<ResponseDto>(productDto.ProductId, token ?? "");
                 if (response != null && response.IsSuccess)
                 {
                     return RedirectToAction(nameof(ProductIndex));

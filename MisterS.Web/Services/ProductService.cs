@@ -12,53 +12,53 @@ namespace MisterS.Web.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<T> CreateProductAsync<T>(ProductDto productDto)
+        public async Task<T> CreateProductAsync<T>(ProductDto productDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequestModel
             {
                 ApiType = Enums.APIType.POST,
                 Data = productDto,
-                AccessToken = "",
+                AccessToken = token,
                 Url = Constants.StaticData.ProductBaseUri + "api/products"
             });
         }
 
-        public async Task<T> DeleteProductByIdAsync<T>(int id)
+        public async Task<T> DeleteProductByIdAsync<T>(int id, string token)
         {
             return await this.SendAsync<T>(new ApiRequestModel
             {
                 ApiType = Enums.APIType.DELETE,
-                AccessToken = "",
+                AccessToken = token,
                 Url = Constants.StaticData.ProductBaseUri + "api/products/" + id
             });
         }
 
-        public async Task<T> GetAllProductsAsync<T>()
+        public async Task<T> GetAllProductsAsync<T>(string token)
         {
             return await this.SendAsync<T>(new ApiRequestModel
             {
                 ApiType = Enums.APIType.GET,
-                AccessToken = "",
+                AccessToken = token,
                 Url = Constants.StaticData.ProductBaseUri + "api/products"
             });
         }
 
-        public async Task<T> GetProductByIdAsync<T>(int id)
+        public async Task<T> GetProductByIdAsync<T>(int id, string token)
         {
             return await this.SendAsync<T>(new ApiRequestModel
             {
                 ApiType = Enums.APIType.GET,
-                AccessToken = "",
+                AccessToken = token,
                 Url = Constants.StaticData.ProductBaseUri + "api/products/" + id
             });
         }
-        public async Task<T> UpdateProductAsync<T>(ProductDto productDto)
+        public async Task<T> UpdateProductAsync<T>(ProductDto productDto, string token)
         {
             return await this.SendAsync<T>(new ApiRequestModel
             {
                 ApiType = Enums.APIType.PUT,
                 Data = productDto,
-                AccessToken = "",
+                AccessToken = token,
                 Url = Constants.StaticData.ProductBaseUri + "api/products"
             });
         }
