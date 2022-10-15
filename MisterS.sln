@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Web", "MisterS.Web\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Services.ProductAPI", "MisterS.Services.ProductAPI\MisterS.Services.ProductAPI.csproj", "{17C93424-BF50-48B4-840B-C4DC1C4BDC94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisterS.Services.Identity", "MisterS.Services.Identity\MisterS.Services.Identity.csproj", "{CD27BB08-0E33-4231-ACFD-BF587B2C5897}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Services.Identity", "MisterS.Services.Identity\MisterS.Services.Identity.csproj", "{CD27BB08-0E33-4231-ACFD-BF587B2C5897}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

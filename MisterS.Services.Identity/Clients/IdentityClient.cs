@@ -20,8 +20,8 @@ namespace MisterS.Services.Identity.Clients
                     ClientId="MisterS",
                     ClientSecrets = { new Secret("MisterSSeceret".Sha256()) },
                     AllowedGrantTypes=GrantTypes.Code,
-                    RedirectUris = {"https://localhost:44396/signin-oidc"},
-                    PostLogoutRedirectUris = { "https://localhost:44396/signout-callback-oidc" },
+                    RedirectUris = {"https://localhost:7292/signin-oidc"},
+                    PostLogoutRedirectUris = { "https://localhost:7292/signout-callback-oidc" },
                     AllowedScopes= new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
