@@ -18,7 +18,6 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ResponseDto> GetProducts()
         {
             try
@@ -39,7 +38,6 @@ namespace MisterS.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         [Route("{id}")]
         public async Task<ResponseDto> GetProductById(int id)
         {
