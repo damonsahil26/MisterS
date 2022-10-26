@@ -6,12 +6,12 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
 {
     [ApiController]
     [Route("api/cart")]
-    public class CartController : Controller
+    public class CartAPIController : Controller
     {
         private readonly ICartRepository _cartRepository;
         protected ResponseDto _responseDto;
 
-        public CartController(ICartRepository cartRepository)
+        public CartAPIController(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
             this._responseDto = new ResponseDto();
@@ -83,6 +83,47 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
             try
             {
                 bool isSuccess = await _cartRepository.RemoveFromCart(cartId);
+                _responseDto.Result = isSuccess;
+                _responseDto.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Errors = new List<string>
+                {
+                    ex.Message
+                };
+            }
+            return _responseDto;
+        }
+
+        [HttpPost("ApplyCoupon")]
+        public async Task<object> ApplyCoupon([FromBody] CartDto cartDto)
+        {
+            try
+            {
+                bool isSuccess = await _cartRepository.ApplyCoupon(cartDto.CartHeader.UserId,
+                    cartDto.CartHeader.CouponCode);
+                _responseDto.Result = isSuccess;
+                _responseDto.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Errors = new List<string>
+                {
+                    ex.Message
+                };
+            }
+            return _responseDto;
+        }
+
+        [HttpPost("RemoveCoupon")]
+        public async Task<object> RemoveCoupon([FromBody] string userId)
+        {
+            try
+            {
+                bool isSuccess = await _cartRepository.RemoveCoupon(userId);
                 _responseDto.Result = isSuccess;
                 _responseDto.IsSuccess = true;
             }
