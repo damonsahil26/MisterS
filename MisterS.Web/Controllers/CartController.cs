@@ -149,5 +149,40 @@ namespace MisterS.Web.Controllers
         {
             return View(await LoadCartBasedOnLoggedInUser());
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(CartDto cartDto)
+        {
+            try
+            {
+                var access_token = await HttpContext.GetTokenAsync("access_token");
+                var checkoutResponse = await _cartService.CheckOut<ResponseDto>(cartDto?.CartHeader, access_token);
+                if (checkoutResponse != null && checkoutResponse.IsSuccess)
+                {
+
+                }
+                return RedirectToAction(nameof(Confirmation));
+            }
+            catch (Exception)
+            {
+
+                return View(cartDto); ;
+            }
+        }
+
+        public async Task<IActionResult> Confirmation()
+        {
+            try
+            {
+
+                return View();
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
