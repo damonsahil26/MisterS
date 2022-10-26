@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Services.ProductAPI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MisterS.Services.Identity", "MisterS.Services.Identity\MisterS.Services.Identity.csproj", "{CD27BB08-0E33-4231-ACFD-BF587B2C5897}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MisterS.Services.ShoppingCartAPI", "MisterS.Services.ShoppingCartAPI\MisterS.Services.ShoppingCartAPI.csproj", "{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{CD27BB08-0E33-4231-ACFD-BF587B2C5897}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD27BB08-0E33-4231-ACFD-BF587B2C5897}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD27BB08-0E33-4231-ACFD-BF587B2C5897}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{EB8B884C-FC39-49FA-A381-95E8093D7366} = {C1724A6E-DDF7-4AC7-A22F-73F9C3BA63B4}
 		{17C93424-BF50-48B4-840B-C4DC1C4BDC94} = {C252A71F-7C44-47DE-AF39-DD027DD7CBD0}
 		{CD27BB08-0E33-4231-ACFD-BF587B2C5897} = {C252A71F-7C44-47DE-AF39-DD027DD7CBD0}
+		{EEE33B04-0B81-4AFD-A615-25C8B6C46E2E} = {C252A71F-7C44-47DE-AF39-DD027DD7CBD0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A114C682-9665-43C9-ABD4-71F1479401EF}

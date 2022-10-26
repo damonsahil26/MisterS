@@ -1,14 +1,19 @@
+using Microsoft.AspNetCore.Authentication;
 using MisterS.Web.Constants;
 using MisterS.Web.Services;
 using MisterS.Web.Services.IServices;
+using MisterS.Web.StaticData;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IProductService, ProductService>();
+builder.Services.AddHttpClient<ICartService, CartService>();
 StaticData.ProductBaseUri = builder.Configuration["ServiceUrls:ProductAPI"];
+StaticData.ShoppingCartAPIBaseUri = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies";
@@ -22,6 +27,8 @@ builder.Services.AddAuthentication(options =>
     options.ClientId = "MisterS";
     options.ClientSecret = "MisterSSeceret";
     options.ResponseType = "code";
+    options.ClaimActions.MapJsonKey("role","role","role");
+    options.ClaimActions.MapJsonKey("sub","sub","sub");
     options.TokenValidationParameters.NameClaimType = "name";
     options.TokenValidationParameters.RoleClaimType = "role";
     options.Scope.Add("misterS");
