@@ -16,6 +16,16 @@ namespace MisterS.Services.ShoppingCartAPI.Repository
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
+        public async Task<bool> ApplyCoupon(string userId, string couponCode)
+        {
+            var cartFromDb = await _dbContext.CartHeaders.FirstOrDefaultAsync(ch => ch.UserId == userId);
+            cartFromDb.CouponCode = couponCode;
+            _dbContext.CartHeaders.Update(cartFromDb);
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }
+
         public async Task<bool> ClearCart(string userId)
         {
             var headerFromDb = await _dbContext.CartHeaders
@@ -119,6 +129,15 @@ namespace MisterS.Services.ShoppingCartAPI.Repository
             }
 
             return new CartDto();
+        }
+
+        public async Task<bool> RemoveCoupon(string userId)
+        {
+            var cartFromDb = await _dbContext.CartHeaders.FirstOrDefaultAsync(ch => ch.UserId == userId);
+            cartFromDb.CouponCode = "";
+            _dbContext.CartHeaders.Update(cartFromDb);
+            await _dbContext.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> RemoveFromCart(int cartDetailsId)

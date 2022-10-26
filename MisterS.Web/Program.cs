@@ -10,10 +10,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IProductService, ProductService>();
 builder.Services.AddHttpClient<ICartService, CartService>();
+builder.Services.AddHttpClient<ICouponService, CouponService>();
+
 StaticData.ProductBaseUri = builder.Configuration["ServiceUrls:ProductAPI"];
 StaticData.ShoppingCartAPIBaseUri = builder.Configuration["ServiceUrls:ShoppingCartAPI"];
+StaticData.CouponAPIBaseUri = builder.Configuration["ServiceUrls:CouponAPI"];
+
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICouponService, CouponService>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = "Cookies";

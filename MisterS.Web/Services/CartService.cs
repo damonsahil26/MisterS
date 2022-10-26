@@ -23,6 +23,17 @@ namespace MisterS.Web.Services
             });
         }
 
+        public async Task<T> ApplyCouponAsync<T>(CartDto cartDto, string? token = null)
+        {
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.POST,
+                Data = cartDto,
+                AccessToken = token ?? "",
+                Url = Constants.StaticData.ShoppingCartAPIBaseUri + "api/cart/ApplyCoupon"
+            });
+        }
+
         public async Task<T> GetCartByUserIdAsync<T>(string userId, string? token = null)
         {
             return await this.SendAsync<T>(new ApiRequestModel
@@ -30,6 +41,17 @@ namespace MisterS.Web.Services
                 ApiType = Enums.APIType.GET,
                 AccessToken = token ?? "",
                 Url = Constants.StaticData.ShoppingCartAPIBaseUri + "api/cart/GetCart/" + userId
+            });
+        }
+
+        public async Task<T> RemoveCouponAsync<T>(string userId, string? token = null)
+        {
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.POST,
+                Data = userId,
+                AccessToken = token ?? "",
+                Url = Constants.StaticData.ShoppingCartAPIBaseUri + "api/cart/RemoveCoupon"
             });
         }
 
