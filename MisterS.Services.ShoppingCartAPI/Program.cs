@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MisterS.MessageBus.Services;
 using MisterS.Services.ShoppingCartAPI.DbContexts;
 using MisterS.Services.ShoppingCartAPI.Mapper;
 using MisterS.Services.ShoppingCartAPI.Repository;
@@ -66,6 +67,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 var mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddSingleton<IMessageBusService, AzureMessageBusService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

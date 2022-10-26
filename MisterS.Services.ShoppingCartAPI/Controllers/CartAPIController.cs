@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MisterS.MessageBus.Services;
 using MisterS.Services.ShoppingCartAPI.Models.DTO;
 using MisterS.Services.ShoppingCartAPI.Repository;
 
@@ -9,11 +10,14 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
     public class CartAPIController : Controller
     {
         private readonly ICartRepository _cartRepository;
+        private readonly IMessageBusService _messageBusService;
         protected ResponseDto _responseDto;
 
-        public CartAPIController(ICartRepository cartRepository)
+        public CartAPIController(ICartRepository cartRepository,
+            IMessageBusService messageBusService)
         {
             _cartRepository = cartRepository;
+            _messageBusService = messageBusService;
             this._responseDto = new ResponseDto();
         }
 
@@ -150,6 +154,8 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
                 }
                 checkoutHeaderDto.CartDetails = cart.CartDetails;
                 //Logic to add message to process order
+
+                await _messageBusService.PublishMessage(checkoutHeaderDto,"checkoutmessagetopic");
 
                 _responseDto.Result = true;
                 _responseDto.IsSuccess = true;

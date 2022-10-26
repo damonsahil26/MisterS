@@ -1,6 +1,8 @@
-﻿namespace MisterS.Services.ShoppingCartAPI.Models.DTO
+﻿using MisterS.MessageBus.Models;
+
+namespace MisterS.Services.ShoppingCartAPI.Models.DTO
 {
-    public class CheckoutHeaderDto
+    public class CheckoutHeaderDto : BaseMessage
     {
         public int CartHeaderId { get; set; }
 
