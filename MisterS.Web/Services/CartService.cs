@@ -34,6 +34,17 @@ namespace MisterS.Web.Services
             });
         }
 
+        public async Task<T> CheckOut<T>(CartHeaderDto cartHeaderDto, string? token = null)
+        {
+            return await this.SendAsync<T>(new ApiRequestModel
+            {
+                ApiType = Enums.APIType.POST,
+                Data = cartHeaderDto,
+                AccessToken = token ?? "",
+                Url = Constants.StaticData.ShoppingCartAPIBaseUri + "api/cart/CheckOut"
+            });
+        }
+
         public async Task<T> GetCartByUserIdAsync<T>(string userId, string? token = null)
         {
             return await this.SendAsync<T>(new ApiRequestModel

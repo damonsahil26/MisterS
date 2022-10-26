@@ -137,5 +137,32 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
             }
             return _responseDto;
         }
+
+        [HttpPost("CheckOut")]
+        public async Task<object> CheckOut(CheckoutHeaderDto checkoutHeaderDto)
+        {
+            try
+            {
+               var cart= await _cartRepository.GetCartByUserId(checkoutHeaderDto.UserId);
+                if(cart == null)
+                {
+                    return BadRequest();
+                }
+                checkoutHeaderDto.CartDetails = cart.CartDetails;
+                //Logic to add message to process order
+
+                _responseDto.Result = true;
+                _responseDto.IsSuccess = true;
+            }
+            catch (Exception ex)
+            {
+                _responseDto.IsSuccess = false;
+                _responseDto.Errors = new List<string>
+                {
+                    ex.Message
+                };
+            }
+            return _responseDto;
+        }
     }
 }
