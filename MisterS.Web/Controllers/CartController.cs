@@ -157,9 +157,10 @@ namespace MisterS.Web.Controllers
             {
                 var access_token = await HttpContext.GetTokenAsync("access_token");
                 var checkoutResponse = await _cartService.CheckOut<ResponseDto>(cartDto?.CartHeader, access_token);
-                if (checkoutResponse != null && checkoutResponse.IsSuccess)
+                if (!checkoutResponse.IsSuccess)
                 {
-
+                    TempData["Error"] = checkoutResponse.DisplayMessage;
+                    return RedirectToAction(nameof(CheckOut));
                 }
                 return RedirectToAction(nameof(Confirmation));
             }

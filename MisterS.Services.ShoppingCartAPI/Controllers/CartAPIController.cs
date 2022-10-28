@@ -11,13 +11,16 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
     {
         private readonly ICartRepository _cartRepository;
         private readonly IMessageBusService _messageBusService;
+        private readonly ICouponRepository _couponRepository;
         protected ResponseDto _responseDto;
 
         public CartAPIController(ICartRepository cartRepository,
-            IMessageBusService messageBusService)
+            IMessageBusService messageBusService,
+            ICouponRepository couponRepository)
         {
             _cartRepository = cartRepository;
             _messageBusService = messageBusService;
+            _couponRepository = couponRepository;
             this._responseDto = new ResponseDto();
         }
 
@@ -147,15 +150,27 @@ namespace MisterS.Services.ShoppingCartAPI.Controllers
         {
             try
             {
-               var cart= await _cartRepository.GetCartByUserId(checkoutHeaderDto.UserId);
-                if(cart == null)
+                var cart = await _cartRepository.GetCartByUserId(checkoutHeaderDto.UserId);
+                if (cart == null)
                 {
                     return BadRequest();
                 }
-                checkoutHeaderDto.CartDetails = cart.CartDetails;
-                //Logic to add message to process order
 
-                await _messageBusService.PublishMessage(checkoutHeaderDto,"checkoutmessagetopic");
+                if (!string.IsNullOrEmpty(cart?.CartHeader?.CouponCode))
+                {
+                    var coupon = await _couponRepository.GetCoupon(cart.CartHeader.CouponCode ?? "");
+                    if (checkoutHeaderDto.DiscountTotal != coupon.DiscountAmount)
+                    {
+                        _responseDto.IsSuccess = false;
+                        _responseDto.DisplayMessage = "Coupon price has changed !! Please confirm";
+                        _responseDto.Errors = new List<string> { "Coupon price has changed !! Please confirm" };
+                        return _responseDto;
+                    }
+                }
+
+                checkoutHeaderDto.CartDetails = cart.CartDetails;
+
+                await _messageBusService.PublishMessage(checkoutHeaderDto, "checkoutmessagetopic");
 
                 _responseDto.Result = true;
                 _responseDto.IsSuccess = true;
